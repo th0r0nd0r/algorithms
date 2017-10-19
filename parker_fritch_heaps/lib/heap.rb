@@ -58,29 +58,37 @@ class BinaryMinHeap
     # p "prc"
     # p prc
     # byebug
-    while parent_idx < len
+    # while parent_idx < len
       children_indices = self.child_indices(len, parent_idx)
       children = {}
       children_indices.each do |i|
         children[array[i]] = i
       end
 
-      unless children_indices.empty?
-        parent = array[parent_idx]
-        to_swap = children.keys.min
-        swap_idx = children[to_swap]
-        if prc.call(to_swap, parent) < 0
-          if to_swap > parent
-            to_swap = children.keys.max
-            swap_idx = children[to_swap]
+      return array if children_indices.empty?
+
+        # while parent_idx.between?(0, array.length - 1)
+          parent = array[parent_idx]
+          to_swap = children.keys.min
+          swap_idx = children[to_swap]
+          if prc.call(to_swap, parent) < 0
+            if to_swap > parent
+              to_swap = children.keys.max
+              swap_idx = children[to_swap]
+            end
+            swapping = parent
+            array[parent_idx] = to_swap
+            array[swap_idx] = swapping
           end
-          swapping = parent
-          array[parent_idx] = to_swap
-          array[swap_idx] = swapping
-        end
-      end
-      parent_idx += 1
-    end
+          heapify_down(array, swap_idx, len, &prc)
+          # if parent == array[parent_idx]
+          #   parent_idx = -1
+          # else
+          #   parent_idx = swap_idx
+          # end
+        # end
+      # parent_idx += 1
+      # end
     array
   end
 
