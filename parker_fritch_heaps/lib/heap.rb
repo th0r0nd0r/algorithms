@@ -95,7 +95,13 @@ class BinaryMinHeap
   def self.heapify_up(array, child_idx, len = array.length, &prc)
     prc = prc || Proc.new {|a,b| a <=> b}
 
-    while child_idx > 0
+    begin
+      parent_index(child_idx)
+    rescue
+      return array
+    end
+    
+    # while child_idx > 0
       parent_index = self.parent_index(child_idx)
       parent = {}
       parent[array[parent_index]] = parent_index
@@ -109,10 +115,11 @@ class BinaryMinHeap
           swapping = child
           array[child_idx] = to_swap
           array[swap_idx] = swapping
+          heapify_up(array, swap_idx, len, &prc)
         end
       # end
-      child_idx -= 1
-    end
+      # child_idx -= 1
+    # end
     array
   end
 end

@@ -7,6 +7,8 @@ class Array
       BinaryMinHeap.heapify_down(self, parent_idx, self.length)
       parent_idx += 1
     end
+    BinaryMinHeap.heapify_up(self, self.length - 1, self.length)
+
 
 
 
