@@ -124,6 +124,16 @@ class BinarySearchTree
   end
 
   def in_order_traversal(tree_node = @root, arr = [])
+    sorted_left = []
+    sorted_right = []
+    if tree_node.left
+      sorted_left = in_order_traversal(tree_node.left, [])
+    end
+    if tree_node.right
+      sorted_right = in_order_traversal(tree_node.right, [])
+    end
+    sorted_left << tree_node.value
+    sorted_left + sorted_right
   end
 
   def insert_somewhere(value, parent)
