@@ -12,6 +12,7 @@ class BinaryMinHeap
   end
 
   def count
+    @store.length
   end
 
   def extract
@@ -100,7 +101,7 @@ class BinaryMinHeap
     rescue
       return array
     end
-    
+
     # while child_idx > 0
       parent_index = self.parent_index(child_idx)
       parent = {}
