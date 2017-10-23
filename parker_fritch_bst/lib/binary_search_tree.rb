@@ -14,13 +14,24 @@ class BinarySearchTree
     # byebug
     if @root == nil
       @root = BSTNode.new(value)
-      p @root
+      # p @root
     else
       insert_somewhere(value, @root)
     end
   end
 
   def find(value, tree_node = @root)
+    if tree_node.value == value
+      return tree_node
+    else
+      if value < tree_node.value
+        return nil if tree_node.left == nil
+        find(value, tree_node.left)
+      else
+        return nil if tree_node.right == nil
+        find(value, tree_node.right)
+      end
+    end
   end
 
   def delete(value)
@@ -58,6 +69,9 @@ class BinarySearchTree
       end
     end
   end
+
+
+
 
 
   private
