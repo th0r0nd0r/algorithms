@@ -96,6 +96,9 @@ class BinarySearchTree
   end
 
   def depth(tree_node = @root)
+    # byebug
+    return 0 if tree_node.nil? || tree_node.children.empty?
+    [depth(tree_node.left), depth(tree_node.right)].max + 1
   end
 
   def is_balanced?(tree_node = @root)
