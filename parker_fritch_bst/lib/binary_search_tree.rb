@@ -35,10 +35,64 @@ class BinarySearchTree
   end
 
   def delete(value)
+    # byebug
+    to_delete = self.find(value, @root)
+    if to_delete.left == nil && to_delete.right == nil
+      if to_delete == @root
+        @root = nil
+      else
+        replace_parents_child(to_delete, to_delete.parent, nil)
+      end
+
+    elsif to_delete.left == nil || to_delete.right == nil
+      if to_delete.left
+        replace_parents_child(to_delete, to_delete.parent, to_delete.left)
+      else
+        replace_parents_child(to_delete, to_delete.parent, to_delete.right)
+      end
+
+    else
+      replacement_node = maximum(to_delete.left)
+      replace_parents_child(replacement_node, replacement_node.parent, replacement_node.left)
+      replace_parents_child(to_delete, to_delete.parent, replacement_node)
+      unless to_delete.children.empty?
+        to_delete.children.each do |child|
+          replace_childs_parent(child, replacement_node)
+        end
+      end
+
+    end
+  end
+
+  def replace_parents_child(node, parent, new_node = nil)
+    if parent.left == node
+      parent.left = new_node
+    else
+      parent.right = new_node
+    end
+
+    if new_node != nil
+      new_node.parent = parent
+    end
+  end
+
+  def replace_childs_parent(child, new_parent)
+    child.parent = new_parent
+    if child.value <= new_parent.value
+      new_parent.left = child
+    else
+      new_parent.right = child
+    end
   end
 
   # helper method for #delete:
   def maximum(tree_node = @root)
+    # byebug
+    if tree_node.right
+      maximum(tree_node.right)
+    else
+      tree_node
+    end
   end
 
   def depth(tree_node = @root)

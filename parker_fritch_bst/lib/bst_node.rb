@@ -6,4 +6,15 @@ class BSTNode
     @right = nil
     @parent = nil
   end
+
+  def children
+    children = []
+    if @left
+      children << @left
+    end
+    if @right
+      children << @right
+    end
+    children
+  end
 end
