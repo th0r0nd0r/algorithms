@@ -1,7 +1,7 @@
 class DynamicProgramming
 
   def initialize
-
+    @cache = {}
   end
 
   def blair_nums(n)
