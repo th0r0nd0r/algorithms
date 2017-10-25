@@ -49,12 +49,12 @@ class DynamicProgramming
   end
 
   def knapsack(weights, values, capacity)
-
+    knapsack_table(weights, values, capacity).last.last
   end
 
   # Helper method for bottom-up implementation
   def knapsack_table(weights, values, capacity)
-    table = Array.new(capacity) {[]}
+    table = Array.new(capacity + 1) {[]}
     weights_hash = {
       weights[0] => values[0],
       weights[1] => values[1],
@@ -70,10 +70,24 @@ class DynamicProgramming
             table[j] << 0
           end
         else
-          
+          if weight < cap
+            item_value = weights_hash[weight]
+            p "item value"
+            p item_value
+            p "value you can add to item"
+            p table[cap - weight][i - 1]
+            total_value = table[cap - weight][i - 1] + item_value
+            input = [total_value, table[cap][i - 1]].max
+            table[j] << input
+          else
+            table[j] << table[j][i - 1]
+          end
+        end
       end
+
     end
 
+    table
   end
 
   def maze_solver(maze, start_pos, end_pos)
