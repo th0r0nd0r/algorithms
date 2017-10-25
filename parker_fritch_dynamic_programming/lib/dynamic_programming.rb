@@ -13,15 +13,31 @@ class DynamicProgramming
   end
 
   def frog_hops_bottom_up(n)
-
+    hops_cache = frog_cache_builder(n)
+    hops_cache[n]
   end
 
   def frog_cache_builder(n)
-    cache = {1 => [[1]], 2 => [[1,1], [2]], 3 => [[1,1,1], [1,2], [2,1], [3]]}
+    hops = [[[]], [[1]], [[1, 1], [2]]]
+
+   (3..n).each do |num_stairs|
+     ways_to_hop = []
+     (1..3).each do |current_jump|
+       hops[num_stairs - current_jump].each do |last_way|
+         new_way = last_way + [current_jump]
+         ways_to_hop << new_way
+       end
+     end
+     hops << ways_to_hop
+   end
+
+   hops
   end
 
   def frog_hops_top_down(n)
-
+    frog_hops_top_down_helper(n)
+    hops_cache = frog_cache_builder(n)
+    hops_cache[n]
   end
 
   def frog_hops_top_down_helper(n)
@@ -38,6 +54,25 @@ class DynamicProgramming
 
   # Helper method for bottom-up implementation
   def knapsack_table(weights, values, capacity)
+    table = Array.new(capacity) {[]}
+    weights_hash = {
+      weights[0] => values[0],
+      weights[1] => values[1],
+      weights[2] => values[2]
+    }
+
+    weights.each_with_index do |weight, i|
+      (0..capacity).each_with_index do |cap, j|
+        if i == 0
+          if weight < cap
+            table[j] << weights_hash[weight]
+          else
+            table[j] << 0
+          end
+        else
+          
+      end
+    end
 
   end
 
