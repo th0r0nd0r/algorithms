@@ -17,7 +17,7 @@ class DynamicProgramming
   end
 
   def frog_cache_builder(n)
-
+    cache = {1 => [[1]], 2 => [[1,1], [2]], 3 => [[1,1,1], [1,2], [2,1], [3]]}
   end
 
   def frog_hops_top_down(n)
